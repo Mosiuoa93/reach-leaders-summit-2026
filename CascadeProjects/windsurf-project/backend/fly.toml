@@ -1,35 +1,42 @@
-# fly.toml app configuration file generated for reach-registration-backend
+# fly.toml app configuration file generated for reach-registration-backend on 2025-11-09T23:23:00+02:00
+#
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-app = "reach-registration-backend"
-primary_region = "jnb"
+app = 'reach-registration-backend'
+primary_region = 'jnb'
 
 [build]
-  image = "reach-registration-backend:latest"
+  dockerfile = "Dockerfile"
 
 [env]
-  PORT = "5000"
+  PORT = '5000'
 
 [[services]]
+  protocol = ''
   internal_port = 5000
-  processes = ["app"]
+  processes = ['app']
+
+  [[services.ports]]
+    port = 80
+    handlers = ['http']
+
+  [[services.ports]]
+    port = 443
+    handlers = ['tls', 'http']
 
   [services.concurrency]
     hard_limit = 25
     soft_limit = 20
 
-  [[services.ports]]
-    handlers = ["http"]
-    port = 80
+  [[services.http_checks]]
+    interval = '10s'
+    timeout = '5s'
+    grace_period = '5s'
+    method = 'get'
+    path = '/health'
 
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = 443
-
-  [services.http_checks]
-    enabled = true
-    interval = 10000
-    timeout = 5000
-    grace_period = "5s"
-    method = "get"
-    path = "/health"
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
