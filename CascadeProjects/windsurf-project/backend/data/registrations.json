@@ -1,0 +1,206 @@
+[
+  {
+    "id": "68371902-af8b-4530-b1f4-e8677163fe37",
+    "registrationType": "individual",
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john@example.com",
+    "phone": "+27123456789",
+    "organization": "Multi Ministries",
+    "isStudent": false,
+    "accommodation": "dorm",
+    "groupLeader": null,
+    "groupMembers": [],
+    "partner1": null,
+    "partner2": null,
+    "price": 1400,
+    "registeredAt": "2025-11-09T18:39:40.154Z",
+    "checkedIn": false,
+    "checkedInAt": null
+  },
+  {
+    "id": "bec37ac8-fbb9-4284-a673-eafaf9f8ca11",
+    "registrationType": "individual",
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "email": "jane@example.com",
+    "phone": "+27987654321",
+    "organization": "Community Church",
+    "isStudent": false,
+    "accommodation": "guesthouse",
+    "groupLeader": null,
+    "groupMembers": [],
+    "partner1": null,
+    "partner2": null,
+    "price": 1650,
+    "registeredAt": "2025-11-09T18:39:40.161Z",
+    "checkedIn": false,
+    "checkedInAt": null
+  },
+  {
+    "id": "8701c5c2-ac08-45bd-b136-bae2bec704e6",
+    "registrationType": "student",
+    "firstName": "Peter",
+    "lastName": "Johnson",
+    "email": "peter@example.com",
+    "phone": "+27555555555",
+    "organization": "University",
+    "isStudent": true,
+    "accommodation": "dorm",
+    "groupLeader": null,
+    "groupMembers": [],
+    "partner1": null,
+    "partner2": null,
+    "price": 1155,
+    "registeredAt": "2025-11-09T18:39:40.163Z",
+    "checkedIn": false,
+    "checkedInAt": null
+  },
+  {
+    "id": "4b02de60-c3aa-4989-ac59-57af565d53c4",
+    "registrationType": "couple",
+    "firstName": "Michael",
+    "lastName": "Brown",
+    "email": "michael@example.com",
+    "phone": "+27666666666",
+    "organization": "Faith Center",
+    "isStudent": false,
+    "accommodation": null,
+    "groupLeader": null,
+    "groupMembers": [],
+    "partner1": {
+      "firstName": "Sarah",
+      "lastName": "Brown"
+    },
+    "partner2": {
+      "firstName": "David",
+      "lastName": "Brown"
+    },
+    "price": 3000,
+    "registeredAt": "2025-11-09T18:39:40.166Z",
+    "checkedIn": false,
+    "checkedInAt": null
+  },
+  {
+    "id": "2035be28-0da6-4e6b-84e9-9a2b02c8b6aa",
+    "registrationType": "group",
+    "firstName": "Alice",
+    "lastName": "Wilson",
+    "email": "alice@example.com",
+    "phone": "+27777777777",
+    "organization": "Youth Group",
+    "isStudent": false,
+    "accommodation": null,
+    "groupLeader": {
+      "firstName": "Alice",
+      "lastName": "Wilson"
+    },
+    "groupMembers": [
+      {
+        "firstName": "Bob",
+        "lastName": "Wilson"
+      },
+      {
+        "firstName": "Charlie",
+        "lastName": "Wilson"
+      }
+    ],
+    "partner1": null,
+    "partner2": null,
+    "price": 4200,
+    "registeredAt": "2025-11-09T18:39:40.168Z",
+    "checkedIn": false,
+    "checkedInAt": null
+  },
+  {
+    "id": "c84e605a-5561-463b-8fd1-a3e50bcf37cb",
+    "registrationType": "student",
+    "firstName": "Mosiuoa ",
+    "lastName": "Molefi",
+    "email": "molefi@multiministries.co.za",
+    "phone": "+27786653983",
+    "organization": "Multi Ministries",
+    "isStudent": true,
+    "accommodation": "dorm",
+    "groupLeader": null,
+    "groupMembers": [],
+    "partner1": null,
+    "partner2": null,
+    "price": 1155,
+    "registeredAt": "2025-11-09T20:36:22.270Z",
+    "checkedIn": false,
+    "checkedInAt": null
+  },
+  {
+    "id": "009c0bf6-c55e-4881-bd31-3674c51877d8",
+    "registrationType": "student",
+    "firstName": "Mosa",
+    "lastName": "Molefi",
+    "email": "molefi@gmail.com",
+    "phone": "+27786653983",
+    "organization": "Grace Gospel Ministries",
+    "isStudent": true,
+    "accommodation": "dorm",
+    "groupLeader": null,
+    "groupMembers": [],
+    "partner1": null,
+    "partner2": null,
+    "price": 1155,
+    "registeredAt": "2025-11-09T20:48:30.664Z",
+    "checkedIn": false,
+    "checkedInAt": null
+  },
+  {
+    "id": "f4f4e853-25ce-4d14-b760-7b0d01095827",
+    "registrationType": "couple",
+    "firstName": "Mosiuoa ",
+    "lastName": "Molefi",
+    "email": "mosi.molefi@gmail.com",
+    "phone": "+27786653983",
+    "organization": "Multi Ministries",
+    "isStudent": false,
+    "accommodation": null,
+    "groupLeader": null,
+    "groupMembers": [],
+    "partner1": {
+      "firstName": "Martha ",
+      "lastName": "Molefi"
+    },
+    "partner2": {
+      "firstName": "Mosiuoa",
+      "lastName": "Molefi"
+    },
+    "price": 3000,
+    "registeredAt": "2025-11-09T20:50:22.889Z",
+    "checkedIn": false,
+    "checkedInAt": null
+  },
+  {
+    "id": "c2638061-9f4a-485c-bcb5-b0edaf7e4451",
+    "registrationType": "group",
+    "firstName": "Rethabile ",
+    "lastName": "Molefi",
+    "email": "thelevites@gmail.com",
+    "phone": "0724785298",
+    "organization": "Grace",
+    "isStudent": false,
+    "accommodation": null,
+    "groupLeader": {
+      "firstName": "Rethabile ",
+      "lastName": "Molefi"
+    },
+    "groupMembers": [
+      {
+        "firstName": "Mororiseng ",
+        "lastName": "Molefi",
+        "gender": "female"
+      }
+    ],
+    "partner1": null,
+    "partner2": null,
+    "price": 2800,
+    "registeredAt": "2025-11-09T20:51:30.799Z",
+    "checkedIn": false,
+    "checkedInAt": null
+  }
+]
