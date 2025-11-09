@@ -172,6 +172,30 @@ function AdminDashboard({ onNavigate }) {
               </div>
             </>
           )}
+          {stats.byGender && (
+            <>
+              <div className="stat-card">
+                <div className="stat-number" style={{ color: '#1B3A6B' }}>{stats.byGender.male}</div>
+                <div className="stat-label">Male</div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-number" style={{ color: '#E85D04' }}>{stats.byGender.female}</div>
+                <div className="stat-label">Female</div>
+              </div>
+            </>
+          )}
+          {stats.groupStats && (
+            <>
+              <div className="stat-card">
+                <div className="stat-number" style={{ color: '#9c27b0' }}>{stats.groupStats.groupCount}</div>
+                <div className="stat-label">Groups</div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-number" style={{ color: '#ff5722' }}>{stats.groupStats.totalGroupMembers}</div>
+                <div className="stat-label">Group Members</div>
+              </div>
+            </>
+          )}
           {stats.capacity && (
             <>
               <div className="stat-card">
@@ -296,6 +320,17 @@ function AdminDashboard({ onNavigate }) {
                         <div style={{ fontSize: '0.85rem', color: '#999', marginTop: '4px' }}>
                           + {registration.partner1.firstName} {registration.partner1.lastName}
                           {registration.partner2 && ` + ${registration.partner2.firstName} ${registration.partner2.lastName}`}
+                        </div>
+                      )}
+                      {registration.registrationType === 'group' && registration.groupMembers && (
+                        <div style={{ fontSize: '0.85rem', color: '#999', marginTop: '4px' }}>
+                          <strong>Group ({registration.groupMembers.length + 1} members):</strong>
+                          <div style={{ marginTop: '2px' }}>
+                            • {registration.firstName} {registration.lastName} (Leader)
+                            {registration.groupMembers.map((member, idx) => (
+                              <div key={idx}>• {member.firstName} {member.lastName}</div>
+                            ))}
+                          </div>
                         </div>
                       )}
                     </div>

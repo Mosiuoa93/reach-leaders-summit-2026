@@ -310,11 +310,23 @@ app.get('/api/stats', (req, res) => {
     const group = registrations.filter(reg => reg.registrationType === 'group').length;
     const student = registrations.filter(reg => reg.registrationType === 'student').length;
     
+    // Gender breakdown
+    const male = registrations.filter(reg => reg.gender === 'male').length;
+    const female = registrations.filter(reg => reg.gender === 'female').length;
+    
     // Capacity tracking
     const guestHouseCount = registrations.filter(
       reg => reg.registrationType === 'individual' && reg.accommodation === 'guesthouse'
     ).length;
     const coupleCount = registrations.filter(reg => reg.registrationType === 'couple').length;
+    
+    // Group statistics
+    let totalGroupMembers = 0;
+    registrations.forEach(reg => {
+      if (reg.registrationType === 'group' && reg.groupMembers) {
+        totalGroupMembers += reg.groupMembers.length + 1; // +1 for group leader
+      }
+    });
 
     res.json({
       totalRegistrations: registrations.length,
@@ -325,6 +337,15 @@ app.get('/api/stats', (req, res) => {
         couple,
         group,
         student
+      },
+      byGender: {
+        male,
+        female,
+        other: registrations.length - male - female
+      },
+      groupStats: {
+        groupCount: group,
+        totalGroupMembers: totalGroupMembers
       },
       capacity: {
         guestHouse: {
