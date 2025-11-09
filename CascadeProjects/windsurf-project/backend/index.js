@@ -243,7 +243,7 @@ app.post('/api/checkin/:id', (req, res) => {
   }
 });
 
-// Export to CSV
+// Export to CSV with comprehensive check-in information
 app.get('/api/export/csv', (req, res) => {
   try {
     const registrations = getRegistrations();
@@ -252,12 +252,69 @@ app.get('/api/export/csv', (req, res) => {
       return res.status(400).json({ error: 'No registrations to export' });
     }
 
-    const fields = ['id', 'firstName', 'lastName', 'email', 'phone', 'organization', 'registeredAt', 'checkedIn', 'checkedInAt'];
+    // Transform data for CSV with all names and details
+    const csvData = registrations.map(reg => {
+      let allNames = `${reg.firstName} ${reg.lastName}`;
+      let allGenders = reg.gender || '';
+      
+      // Add couple partner names
+      if (reg.registrationType === 'couple') {
+        if (reg.partner1) {
+          allNames += ` + ${reg.partner1.firstName} ${reg.partner1.lastName}`;
+          allGenders += ` + ${reg.partner1.gender || ''}`;
+        }
+        if (reg.partner2) {
+          allNames += ` + ${reg.partner2.firstName} ${reg.partner2.lastName}`;
+          allGenders += ` + ${reg.partner2.gender || ''}`;
+        }
+      }
+      
+      // Add group member names
+      if (reg.registrationType === 'group' && reg.groupMembers) {
+        allNames += ` (Leader)`;
+        reg.groupMembers.forEach(member => {
+          allNames += ` | ${member.firstName} ${member.lastName}`;
+        });
+      }
+
+      return {
+        'Registration ID': reg.id,
+        'Registration Type': reg.registrationType.charAt(0).toUpperCase() + reg.registrationType.slice(1),
+        'All Names': allNames,
+        'Primary Contact': `${reg.firstName} ${reg.lastName}`,
+        'Email': reg.email,
+        'Phone': reg.phone,
+        'Organization': reg.organization || '-',
+        'Gender(s)': allGenders,
+        'Accommodation': reg.accommodation || '-',
+        'Price (R)': reg.price,
+        'Checked In': reg.checkedIn ? 'Yes' : 'No',
+        'Check-in Time': reg.checkedInAt || '-',
+        'Registration Date': reg.registeredAt
+      };
+    });
+
+    const fields = [
+      'Registration ID',
+      'Registration Type',
+      'All Names',
+      'Primary Contact',
+      'Email',
+      'Phone',
+      'Organization',
+      'Gender(s)',
+      'Accommodation',
+      'Price (R)',
+      'Checked In',
+      'Check-in Time',
+      'Registration Date'
+    ];
+
     const parser = new Parser({ fields });
-    const csv = parser.parse(registrations);
+    const csv = parser.parse(csvData);
 
     res.setHeader('Content-Type', 'text/csv');
-    res.setHeader('Content-Disposition', 'attachment; filename=registrations.csv');
+    res.setHeader('Content-Disposition', `attachment; filename=registrations-${new Date().toISOString().split('T')[0]}.csv`);
     res.send(csv);
   } catch (error) {
     console.error('Export error:', error);
