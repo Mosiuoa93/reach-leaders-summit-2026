@@ -319,10 +319,17 @@ app.get('/api/stats', (req, res) => {
 app.delete('/api/registrations/:id', (req, res) => {
   try {
     const { id } = req.params;
+    
+    if (!id || id === 'undefined') {
+      return res.status(400).json({ error: 'Invalid registration ID' });
+    }
+
     const registrations = getRegistrations();
     
     const index = registrations.findIndex(reg => reg.id === id);
     if (index === -1) {
+      console.log(`Registration not found with ID: ${id}`);
+      console.log(`Available IDs: ${registrations.map(r => r.id).join(', ')}`);
       return res.status(404).json({ error: 'Registration not found' });
     }
 
@@ -331,12 +338,12 @@ app.delete('/api/registrations/:id', (req, res) => {
 
     res.json({
       success: true,
-      message: 'Registration deleted',
+      message: 'Registration deleted successfully',
       deleted: deleted[0]
     });
   } catch (error) {
     console.error('Delete error:', error);
-    res.status(500).json({ error: 'Delete failed' });
+    res.status(500).json({ error: 'Delete failed: ' + error.message });
   }
 });
 

@@ -34,17 +34,27 @@ function AdminDashboard({ onNavigate }) {
   };
 
   const handleDelete = async (id) => {
+    if (!id) {
+      setMessage('✗ Delete failed: No ID found');
+      return;
+    }
+
     if (!window.confirm('Are you sure you want to delete this registration?')) {
       return;
     }
 
     try {
-      await axios.delete(`${API_URL}/api/registrations/${id}`);
-      setMessage('✓ Registration deleted');
-      fetchData();
-      setTimeout(() => setMessage(''), 2000);
+      const response = await axios.delete(`${API_URL}/api/registrations/${id}`);
+      if (response.data.success) {
+        setMessage('✓ Registration deleted successfully');
+        fetchData();
+        setTimeout(() => setMessage(''), 2000);
+      } else {
+        setMessage('✗ Delete failed: ' + (response.data.error || 'Unknown error'));
+      }
     } catch (error) {
-      setMessage('✗ Delete failed');
+      const errorMsg = error.response?.data?.error || error.message || 'Delete failed';
+      setMessage('✗ ' + errorMsg);
       console.error('Delete error:', error);
     }
   };
