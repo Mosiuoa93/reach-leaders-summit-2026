@@ -151,17 +151,20 @@ app.post('/api/register', (req, res) => {
       lastName,
       email,
       phone,
-      organization: organization || '',
-      isStudent: isStudent || false,
-      accommodation: accommodation || null,
-      groupLeader: groupLeader || null,
-      groupMembers: groupMembers || [],
-      partner1: partner1 || null,
-      partner2: partner2 || null,
+      organization,
+      gender: req.body.gender || null,
+      isStudent,
+      accommodation,
       price,
       registeredAt: new Date().toISOString(),
       checkedIn: false,
-      checkedInAt: null
+      checkedInAt: null,
+      // Couple registration data
+      partner1: partner1 || null,
+      partner2: partner2 || null,
+      // Group registration data
+      groupLeader: groupLeader || null,
+      groupMembers: groupMembers || null
     };
 
     registrations.push(newRegistration);
