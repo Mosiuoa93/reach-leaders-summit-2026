@@ -242,6 +242,7 @@ function AdminDashboard({ onNavigate }) {
               <div className="col-name">Name</div>
               <div className="col-email">Email</div>
               <div className="col-phone">Phone</div>
+              <div className="col-gender">Gender</div>
               <div className="col-type">Type</div>
               <div className="col-status">Status</div>
               <div className="col-actions">Actions</div>
@@ -280,6 +281,11 @@ function AdminDashboard({ onNavigate }) {
                         onChange={(e) => handleEditChange('phone', e.target.value)}
                         placeholder="Phone"
                       />
+                    </div>
+                    <div className="col-gender">
+                      <span style={{ textTransform: 'capitalize' }}>
+                        {registration.gender || '-'}
+                      </span>
                     </div>
                     <div className="col-org">
                       <input
@@ -336,6 +342,15 @@ function AdminDashboard({ onNavigate }) {
                     </div>
                     <div className="col-email">{registration.email}</div>
                     <div className="col-phone">{registration.phone}</div>
+                    <div className="col-gender">
+                      <span style={{
+                        textTransform: 'capitalize',
+                        fontWeight: '600',
+                        color: registration.gender === 'male' ? '#1B3A6B' : '#E85D04'
+                      }}>
+                        {registration.gender || '-'}
+                      </span>
+                    </div>
                     <div className="col-type">
                       <span className="type-badge" style={{
                         background: registration.registrationType === 'couple' ? '#E85D04' :
