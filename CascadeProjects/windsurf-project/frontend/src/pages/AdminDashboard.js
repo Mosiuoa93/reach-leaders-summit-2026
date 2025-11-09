@@ -152,6 +152,38 @@ function AdminDashboard({ onNavigate }) {
             <div className="stat-number" style={{ color: '#ff9800' }}>{stats.notCheckedIn}</div>
             <div className="stat-label">Not Checked In</div>
           </div>
+          {stats.byType && (
+            <>
+              <div className="stat-card">
+                <div className="stat-number" style={{ color: '#1B3A6B' }}>{stats.byType.individual}</div>
+                <div className="stat-label">Individual</div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-number" style={{ color: '#E85D04' }}>{stats.byType.couple}</div>
+                <div className="stat-label">Couple</div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-number" style={{ color: '#9c27b0' }}>{stats.byType.group}</div>
+                <div className="stat-label">Group</div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-number" style={{ color: '#00bcd4' }}>{stats.byType.student}</div>
+                <div className="stat-label">Student</div>
+              </div>
+            </>
+          )}
+          {stats.capacity && (
+            <>
+              <div className="stat-card">
+                <div className="stat-number">{stats.capacity.guestHouse.available}/{stats.capacity.guestHouse.limit}</div>
+                <div className="stat-label">Guest House Available</div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-number">{stats.capacity.couple.available}/{stats.capacity.couple.limit}</div>
+                <div className="stat-label">Couple Available</div>
+              </div>
+            </>
+          )}
         </div>
 
         {/* Search and Export */}
@@ -186,7 +218,7 @@ function AdminDashboard({ onNavigate }) {
               <div className="col-name">Name</div>
               <div className="col-email">Email</div>
               <div className="col-phone">Phone</div>
-              <div className="col-org">Organization</div>
+              <div className="col-type">Type</div>
               <div className="col-status">Status</div>
               <div className="col-actions">Actions</div>
             </div>
@@ -233,6 +265,9 @@ function AdminDashboard({ onNavigate }) {
                         placeholder="Organization"
                       />
                     </div>
+                    <div className="col-type">
+                      <span className="type-badge">{registration.registrationType}</span>
+                    </div>
                     <div className="col-status">
                       <span className={`status-badge ${registration.checkedIn ? 'checked-in' : 'pending'}`}>
                         {registration.checkedIn ? '✓ Checked In' : 'Pending'}
@@ -257,10 +292,30 @@ function AdminDashboard({ onNavigate }) {
                   <>
                     <div className="col-name">
                       {registration.firstName} {registration.lastName}
+                      {registration.registrationType === 'couple' && registration.partner1 && (
+                        <div style={{ fontSize: '0.85rem', color: '#999', marginTop: '4px' }}>
+                          + {registration.partner1.firstName} {registration.partner1.lastName}
+                          {registration.partner2 && ` + ${registration.partner2.firstName} ${registration.partner2.lastName}`}
+                        </div>
+                      )}
                     </div>
                     <div className="col-email">{registration.email}</div>
                     <div className="col-phone">{registration.phone}</div>
-                    <div className="col-org">{registration.organization || '-'}</div>
+                    <div className="col-type">
+                      <span className="type-badge" style={{
+                        background: registration.registrationType === 'couple' ? '#E85D04' :
+                                   registration.registrationType === 'group' ? '#9c27b0' :
+                                   registration.registrationType === 'student' ? '#00bcd4' : '#1B3A6B',
+                        color: 'white',
+                        padding: '4px 8px',
+                        borderRadius: '4px',
+                        fontSize: '0.85rem',
+                        fontWeight: '600',
+                        display: 'inline-block'
+                      }}>
+                        {registration.registrationType.charAt(0).toUpperCase() + registration.registrationType.slice(1)}
+                      </span>
+                    </div>
                     <div className="col-status">
                       <span className={`status-badge ${registration.checkedIn ? 'checked-in' : 'pending'}`}>
                         {registration.checkedIn ? '✓ Checked In' : 'Pending'}

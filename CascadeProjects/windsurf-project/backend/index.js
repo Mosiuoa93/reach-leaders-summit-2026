@@ -303,11 +303,41 @@ app.get('/api/stats', (req, res) => {
   try {
     const registrations = getRegistrations();
     const checkedIn = registrations.filter(reg => reg.checkedIn).length;
+    
+    // Breakdown by registration type
+    const individual = registrations.filter(reg => reg.registrationType === 'individual').length;
+    const couple = registrations.filter(reg => reg.registrationType === 'couple').length;
+    const group = registrations.filter(reg => reg.registrationType === 'group').length;
+    const student = registrations.filter(reg => reg.registrationType === 'student').length;
+    
+    // Capacity tracking
+    const guestHouseCount = registrations.filter(
+      reg => reg.registrationType === 'individual' && reg.accommodation === 'guesthouse'
+    ).length;
+    const coupleCount = registrations.filter(reg => reg.registrationType === 'couple').length;
 
     res.json({
       totalRegistrations: registrations.length,
       checkedIn,
-      notCheckedIn: registrations.length - checkedIn
+      notCheckedIn: registrations.length - checkedIn,
+      byType: {
+        individual,
+        couple,
+        group,
+        student
+      },
+      capacity: {
+        guestHouse: {
+          current: guestHouseCount,
+          limit: 120,
+          available: 120 - guestHouseCount
+        },
+        couple: {
+          current: coupleCount,
+          limit: 74,
+          available: 74 - coupleCount
+        }
+      }
     });
   } catch (error) {
     console.error('Stats error:', error);
