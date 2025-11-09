@@ -252,20 +252,23 @@ app.get('/api/export/csv', (req, res) => {
       return res.status(400).json({ error: 'No registrations to export' });
     }
 
+    // Helper function to get gender abbreviation
+    const getGenderAbbr = (gender) => {
+      if (!gender) return '';
+      return gender.toLowerCase() === 'male' ? '(M)' : '(F)';
+    };
+
     // Transform data for CSV with all names and details
     const csvData = registrations.map(reg => {
-      let allNames = `${reg.firstName} ${reg.lastName}`;
-      let allGenders = reg.gender || '';
+      let allNames = `${reg.firstName} ${reg.lastName} ${getGenderAbbr(reg.gender)}`;
       
       // Add couple partner names
       if (reg.registrationType === 'couple') {
         if (reg.partner1) {
-          allNames += ` + ${reg.partner1.firstName} ${reg.partner1.lastName}`;
-          allGenders += ` + ${reg.partner1.gender || ''}`;
+          allNames += ` + ${reg.partner1.firstName} ${reg.partner1.lastName} ${getGenderAbbr(reg.partner1.gender)}`;
         }
         if (reg.partner2) {
-          allNames += ` + ${reg.partner2.firstName} ${reg.partner2.lastName}`;
-          allGenders += ` + ${reg.partner2.gender || ''}`;
+          allNames += ` + ${reg.partner2.firstName} ${reg.partner2.lastName} ${getGenderAbbr(reg.partner2.gender)}`;
         }
       }
       
@@ -273,19 +276,17 @@ app.get('/api/export/csv', (req, res) => {
       if (reg.registrationType === 'group' && reg.groupMembers) {
         allNames += ` (Leader)`;
         reg.groupMembers.forEach(member => {
-          allNames += ` | ${member.firstName} ${member.lastName}`;
+          allNames += ` | ${member.firstName} ${member.lastName} ${getGenderAbbr(member.gender)}`;
         });
       }
 
       return {
-        'Registration ID': reg.id,
         'Registration Type': reg.registrationType.charAt(0).toUpperCase() + reg.registrationType.slice(1),
-        'All Names': allNames,
+        'Names': allNames,
         'Primary Contact': `${reg.firstName} ${reg.lastName}`,
         'Email': reg.email,
         'Phone': reg.phone,
         'Organization': reg.organization || '-',
-        'Gender(s)': allGenders,
         'Accommodation': reg.accommodation || '-',
         'Price (R)': reg.price,
         'Checked In': reg.checkedIn ? 'Yes' : 'No',
@@ -295,14 +296,12 @@ app.get('/api/export/csv', (req, res) => {
     });
 
     const fields = [
-      'Registration ID',
       'Registration Type',
-      'All Names',
+      'Names',
       'Primary Contact',
       'Email',
       'Phone',
       'Organization',
-      'Gender(s)',
       'Accommodation',
       'Price (R)',
       'Checked In',
